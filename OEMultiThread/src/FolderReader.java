@@ -7,14 +7,14 @@ public class FolderReader {
  * determines type of each file
  * calls designated extractor for each file
  */
-	public static final File inputPath = new File ("/Users/gustavopinheiro/Desktop/moinho");
+	//public static final File inputPath = new File ("/Users/gustavopinheiro/Desktop/moinho");
 	public static String[] orderFiles = new String[100];
 	public static boolean isFirstOrder = true;
 	public static boolean isLastOrder = false;
 	
-	public static void main(String[] args) {
+	public static void main(File args) {
 		try {
-		orderFiles = inputPath.list();
+		orderFiles = args.list();
 		for (int i = 1; i<=(orderFiles.length-1); i++) {
 			System.out.println(orderFiles[i]);
 		}
