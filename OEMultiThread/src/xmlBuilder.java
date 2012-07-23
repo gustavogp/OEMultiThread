@@ -232,7 +232,7 @@ public static void qtyArrayBuilder(String s, String order, String totalAmount, S
 		for (i = firstIndex; i<lastIndex; i++) {
 			try {
 				try {
-					if(soldTo.equalsIgnoreCase("avnetLA") || soldTo.equalsIgnoreCase("664711")) { //ACOM 664711  using English format, NOT ANYMORE (04/20/2012), AGAIN 0n 05/04, NOT ANYMORE (05/16), AGAIN (06/06), NOT ANYMORE (06/12), AGAIN (06/19)
+					if(soldTo.equalsIgnoreCase("avnetLA") ) { //ACOM 664711  using English format, NOT ANYMORE (04/20/2012), AGAIN 0n 05/04, NOT ANYMORE (05/16), AGAIN (06/06), NOT ANYMORE (06/12), AGAIN (06/19)
 						temp = nFEng.parse(elements[i]);
 					} else {
 						temp = nFGer.parse(elements[i]);
@@ -260,13 +260,20 @@ public static void qtyArrayBuilder(String s, String order, String totalAmount, S
 		System.out.println(allNumbers);
 		
 		try {
-			qtyPriceSol = EvoAlgor.main(hSet.size(), allNumbers.toArray(), totalAmount, soldTo);
+			if (hSet.size()>0) {
+				qtyPriceSol = EvoAlgor.main(hSet.size(), allNumbers.toArray(), totalAmount, soldTo);
 			
-			qtySol = qtyPriceSol.get(0);
-			priceSol = qtyPriceSol.get(1);
-			
+				qtySol = qtyPriceSol.get(0);
+				priceSol = qtyPriceSol.get(1);
+			} else {
+				System.out.println("No Valid SKU found on PO " + order + "\nAborting");
+				OEMultiT.noValidSkuMessage(order);
+			}
 		} catch (IOException e) {
-			//do nothing
+			System.err.format("Exception in xmlBuilder: %s%n", e);
+			if ((e.toString().contains("NoSuchElement"))) {
+				System.out.println("No Solution Found");
+			}
 		}
 		if (!qtySol.isEmpty()) {
 			for (double qty2: qtySol) {
@@ -376,6 +383,8 @@ public static void closeXML() throws SAXException {
 	handler.endDocument();
 	xlsxBuilder.main();
 	csvBuilder.main();
+	OEMultiT.doneMessage();
+	streamResult = null; //reseting streamResult to force creation of new data.xml file
 }
 
 }

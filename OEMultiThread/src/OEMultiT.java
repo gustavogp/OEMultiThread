@@ -7,12 +7,13 @@ import java.io.File;
 import javax.swing.*;
 
 
+@SuppressWarnings("serial")
 public class OEMultiT extends JPanel implements ActionListener {
     //fields
 	static private final String newline = "\n";
 	static File inputPath;
     JButton chooseFolderButton, runButton;
-    JTextArea log;
+    static JTextArea log;
     JFileChooser fc;
 	
     //constructor
@@ -71,7 +72,19 @@ public class OEMultiT extends JPanel implements ActionListener {
         		if (inputPath.list().length < 2) {
         			log.append("Source Folder is empty!" + newline);	
         		} else {
-        			FolderReader.main(inputPath);
+        			log.append("running..." + newline);
+        			try {
+        				Thread t = new Thread( new Runnable () {
+        						public void run() {
+        							FolderReader.main(inputPath);
+        						}
+        				});
+        				t.start();
+        			} catch (Exception e) {
+        				log.append("Exception! Unable to complete." + newline);
+        			} finally {
+        				//do nothing
+        			}
         		}
 
         	} else {
@@ -93,6 +106,14 @@ public class OEMultiT extends JPanel implements ActionListener {
 		frame.pack();
 		frame.setVisible(true);
 		
+	}
+	
+	public static void doneMessage () {
+		log.append("Done! Check if all files were processed correctly." + newline);
+	}
+	
+	public static void noValidSkuMessage (String order) {
+		log.append("No Valid SKU found on PO " + order + newline);
 	}
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
