@@ -1,4 +1,4 @@
-import java.io.IOException;
+import java.io.*;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.*;
@@ -33,6 +33,7 @@ public class xmlBuilder {
     static Set<String> eanSet= new LinkedHashSet<String>();
     static Map<String, String> eanMap = new LinkedHashMap<String, String>();
     static Map<String, String> pnMap = new LinkedHashMap<String, String>();
+    static File dataXml;
 	
 public static void initXML() throws ParserConfigurationException,
 	TransformerConfigurationException, SAXException {
@@ -384,7 +385,6 @@ public static void closeXML() throws SAXException {
 	xlsxBuilder.main();
 	csvBuilder.main();
 	OEMultiT.doneMessage();
-	streamResult = null; //reseting streamResult to force creation of new data.xml file
 }
 
 }
