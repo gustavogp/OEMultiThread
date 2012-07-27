@@ -12,7 +12,7 @@ public class csvBuilder extends DefaultHandler {
 	public BufferedWriter outputWriter;
 	public FileWriter fileOut;
 	
-	public static Calendar todayNow = Calendar.getInstance();
+	public static Calendar todayNow;
 	public static String yyyy;
 	public static String mm;
 	public static String dd;
@@ -32,7 +32,7 @@ public class csvBuilder extends DefaultHandler {
 	public static void main() {
 		
 		try {
-			
+			todayNow = Calendar.getInstance();
 			yyyy = String.valueOf(todayNow.get(Calendar.YEAR));
 			if ((todayNow.get(Calendar.MONTH)+1) < 10) {
 				mm = "0" + String.valueOf((todayNow.get(Calendar.MONTH)+1));
