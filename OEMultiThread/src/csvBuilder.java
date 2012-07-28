@@ -7,7 +7,7 @@ import java.util.*;
 public class csvBuilder extends DefaultHandler {
 	static XMLReader xr;
 	static FileReader dataReader;
-	public static int orderCounter = 1;
+	public static int orderCounter;
 	
 	public BufferedWriter outputWriter;
 	public FileWriter fileOut;
@@ -32,6 +32,7 @@ public class csvBuilder extends DefaultHandler {
 	public static void main() {
 		
 		try {
+			orderCounter = 1;
 			todayNow = Calendar.getInstance();
 			yyyy = String.valueOf(todayNow.get(Calendar.YEAR));
 			if ((todayNow.get(Calendar.MONTH)+1) < 10) {
