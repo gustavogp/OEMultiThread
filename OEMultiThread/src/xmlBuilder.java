@@ -233,7 +233,7 @@ public static void qtyArrayBuilder(String s, String order, String totalAmount, S
 		for (i = firstIndex; i<lastIndex; i++) {
 			try {
 				try {
-					if(soldTo.equalsIgnoreCase("avnetLA") || soldTo.equalsIgnoreCase("664711")) { //ACOM 664711  using English format, NOT ANYMORE (04/20/2012), AGAIN 0n 05/04, NOT ANYMORE (05/16), AGAIN (06/06), NOT ANYMORE (06/12), AGAIN (06/19)
+					if(soldTo.equalsIgnoreCase("avnetLA")) { //ACOM 664711  using English format, NOT ANYMORE (04/20/2012), AGAIN 0n 05/04, NOT ANYMORE (05/16), AGAIN (06/06), NOT ANYMORE (06/12), AGAIN (06/19)
 						temp = nFEng.parse(elements[i]);
 					} else {
 						temp = nFGer.parse(elements[i]);

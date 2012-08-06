@@ -45,6 +45,12 @@ public class FolderReader {
 			dot = orderFiles[i].lastIndexOf(".");
 			String extension = orderFiles[i].substring(dot + 1);
 			
+			//testing change file name
+			ChangeFileName.buildSoldAndShipMaps();
+       		ChangeFileName.changeNames();
+			soldTo = ChangeFileName.newSoldTo;
+			shipTo = ChangeFileName.newShipTo;
+			
 			System.out.println(extension);
 			if (extension.equalsIgnoreCase("pdf")) {
 				pdfExtractBox.main(orderFiles[i], soldTo, shipTo, pO, totalAmount, isFirstOrder, isLastOrder);

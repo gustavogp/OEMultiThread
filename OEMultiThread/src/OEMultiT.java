@@ -73,6 +73,8 @@ public class OEMultiT extends JPanel implements ActionListener {
         			log.append("Source Folder is empty!" + newline);	
         		} else {
         			log.append("running..." + newline);
+        	//		ChangeFileName.buildSoldAndShipMaps();
+        	//		ChangeFileName.changeNames();
         			try {
         				Thread t = new Thread( new Runnable () {
         						public void run() {
