@@ -68,8 +68,8 @@ public class ChangeFileName {
 					}
 
 				}
-				System.out.println( soldToMap);
-				System.out.println( shipToMap);
+			//	System.out.println( soldToMap);
+			//	System.out.println( shipToMap);
 
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -80,7 +80,7 @@ public class ChangeFileName {
 		}
 		
 	}
-	public static void changeNames() {
+	public static void changeFileNames() {
 		String[] orderFiles = new String[100];
 		File file;
 		
@@ -119,5 +119,11 @@ public class ChangeFileName {
 			} else System.out.println("ainda sem acesso");
 			System.out.println("trying to change file name to " + file.getName()); */
 		} 
+	}
+	public static String[] changeSoldTo(String st, String shpt) {
+		String[] newSoldShip = new String[2];
+		newSoldShip[0] = soldToMap.get(st);
+		newSoldShip[1] = shipToMap.get(shpt);
+		return newSoldShip;
 	}
 }

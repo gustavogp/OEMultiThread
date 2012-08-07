@@ -27,6 +27,8 @@ public class FolderReader {
 		}
 	}
 	public static void selectExtractor () throws IOException {
+		String[] newSoldShipArray = new String[2];
+		
 		for (int i = 1; i<= (orderFiles.length-1); i++) {
 			if (i == (orderFiles.length-1)) {
 				isLastOrder = true;
@@ -46,10 +48,14 @@ public class FolderReader {
 			String extension = orderFiles[i].substring(dot + 1);
 			
 			//testing change file name
+			newSoldShipArray[0] = null;
+			newSoldShipArray[1] = null;
+			
 			ChangeFileName.buildSoldAndShipMaps();
-       		ChangeFileName.changeNames();
-			soldTo = ChangeFileName.newSoldTo;
-			shipTo = ChangeFileName.newShipTo;
+			newSoldShipArray = ChangeFileName.changeSoldTo(soldTo, shipTo);
+       		
+			soldTo = newSoldShipArray[0];
+			shipTo = newSoldShipArray[1];
 			
 			System.out.println(extension);
 			if (extension.equalsIgnoreCase("pdf")) {
