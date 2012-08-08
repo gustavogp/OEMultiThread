@@ -100,8 +100,9 @@ public class ChangeFileName {
 			dot = orderFiles[i].lastIndexOf(".");
 			String extension = orderFiles[i].substring(dot + 1);
 			//retrieve data from maps
+			String shipConcat = soldTo + shipTo;
 			newSoldTo = soldToMap.get(soldTo);
-			newShipTo = shipToMap.get(shipTo);
+			newShipTo = shipToMap.get(shipConcat);
 			//rename
 			System.out.println(newSoldTo + ", " + newShipTo);
 		/*	file = new File(orderFiles[i]);
@@ -122,8 +123,9 @@ public class ChangeFileName {
 	}
 	public static String[] changeSoldTo(String st, String shpt) {
 		String[] newSoldShip = new String[2];
+		String shipConcat = st + shpt;
 		newSoldShip[0] = soldToMap.get(st);
-		newSoldShip[1] = shipToMap.get(shpt);
+		newSoldShip[1] = shipToMap.get(shipConcat);
 		return newSoldShip;
 	}
 }
