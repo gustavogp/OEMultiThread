@@ -29,6 +29,8 @@ public class FolderReader {
 	public static void selectExtractor () throws IOException {
 		String[] newSoldShipArray = new String[2];
 		
+		OEFunctions.tableNumberByShipToBuilder(); //build the table only 1x
+		
 		for (int i = 1; i<= (orderFiles.length-1); i++) {
 			if (i == (orderFiles.length-1)) {
 				isLastOrder = true;
@@ -58,36 +60,37 @@ public class FolderReader {
 			shipTo = newSoldShipArray[1];
 			
 			//testing building price tables
-			OEFunctions.tableNumberByShipToBuilder();
+			int tableNumber = OEFunctions.tableNumberByShipTo.get(shipTo);
+			OEFunctions.priceTablesTableBuilder();
 			
 			System.out.println(extension);
 			if (extension.equalsIgnoreCase("pdf")) {
 				pdfExtractBox.main(orderFiles[i], soldTo, shipTo, pO, totalAmount, isFirstOrder, isLastOrder);
-				System.out.println("\n"+i);
+				System.out.println("\n"+i + ", price table # :" + tableNumber);
 			} else if (extension.equalsIgnoreCase("html"))  {
 				htmlExtract.main(orderFiles[i], soldTo, shipTo, pO, totalAmount, isFirstOrder, isLastOrder);
-				System.out.println("\n"+i);
+				System.out.println("\n"+i + ", price table # :" + tableNumber);
 			} else if (extension.equalsIgnoreCase("htm")) {
 				htmlExtract.main(orderFiles[i], soldTo, shipTo, pO, totalAmount, isFirstOrder, isLastOrder);
-				System.out.println("\n"+i);
+				System.out.println("\n"+i + ", price table # :" + tableNumber);
 			} else if (extension.equalsIgnoreCase("txt")) {
 				htmlExtract.main(orderFiles[i], soldTo, shipTo, pO, totalAmount, isFirstOrder, isLastOrder);
-				System.out.println("\n"+i);
+				System.out.println("\n"+i + ", price table # :" + tableNumber);
 			} else if (extension.equalsIgnoreCase("xls")) {
 				xlsExtractor.main(orderFiles[i], soldTo, shipTo, pO, totalAmount, isFirstOrder, isLastOrder);
-				System.out.println("\n"+i);
+				System.out.println("\n"+i + ", price table # :" + tableNumber);
 			} else if (extension.equalsIgnoreCase("xlsx")) {
 				xlsxExtractor.main(orderFiles[i], soldTo, shipTo, pO, totalAmount, isFirstOrder, isLastOrder);
-				System.out.println("\n"+i);
+				System.out.println("\n"+i + ", price table # :" + tableNumber);
 			} else if (extension.equalsIgnoreCase("doc")) {
 				docExtract.main(orderFiles[i], soldTo, shipTo, pO, totalAmount, isFirstOrder, isLastOrder);
-				System.out.println("\n"+i);
+				System.out.println("\n"+i + ", price table # :" + tableNumber);
 			} else if (extension.equalsIgnoreCase("docx")) {
 				docxExtract.main(orderFiles[i], soldTo, shipTo, pO, totalAmount, isFirstOrder, isLastOrder);
-				System.out.println("\n"+i);
+				System.out.println("\n"+i + ", price table # :" + tableNumber);
 			} else if (extension.equalsIgnoreCase("rtf")) {
 				rtfExtract.main(orderFiles[i], soldTo, shipTo, pO, totalAmount, isFirstOrder, isLastOrder);
-				System.out.println("\n"+i);
+				System.out.println("\n"+i + ", price table # :" + tableNumber);
 			}
 			isFirstOrder = false;
 		}
