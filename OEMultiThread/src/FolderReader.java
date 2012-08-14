@@ -47,7 +47,7 @@ public class FolderReader {
 			dot = orderFiles[i].lastIndexOf(".");
 			String extension = orderFiles[i].substring(dot + 1);
 			
-			//testing change file name
+			//change file name
 			newSoldShipArray[0] = null;
 			newSoldShipArray[1] = null;
 			
@@ -56,6 +56,9 @@ public class FolderReader {
        		
 			soldTo = newSoldShipArray[0];
 			shipTo = newSoldShipArray[1];
+			
+			//testing building price tables
+			OEFunctions.tableNumberByShipToBuilder();
 			
 			System.out.println(extension);
 			if (extension.equalsIgnoreCase("pdf")) {

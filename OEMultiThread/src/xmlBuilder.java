@@ -11,6 +11,7 @@ import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.sax.TransformerHandler;
 import javax.xml.transform.stream.StreamResult;
 import org.apache.poi.xssf.extractor.XSSFEventBasedExcelExtractor;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
@@ -126,11 +127,13 @@ public static void buildEanMap(){
 	XSSFEventBasedExcelExtractor extractor = null;
 	String searchMe = null;
 	String path = "/Users/gustavopinheiro/Documents/BRAZIL/Lista Precos/PNxEAN 2012-03-14.xlsx";
+
 	
 	try {
 		if (!(priceListPn[0] != null)) {   
 	        
-	        extractor = new XSSFEventBasedExcelExtractor(path);        
+	        extractor = new XSSFEventBasedExcelExtractor(path); 
+
 	        searchMe = extractor.getText();
 	    	String matc = null;
 	    	String matcShort = null;
@@ -233,7 +236,7 @@ public static void qtyArrayBuilder(String s, String order, String totalAmount, S
 		for (i = firstIndex; i<lastIndex; i++) {
 			try {
 				try {
-					if(soldTo.equalsIgnoreCase("avnetLA")) { //ACOM 664711  using English format, NOT ANYMORE (04/20/2012), AGAIN 0n 05/04, NOT ANYMORE (05/16), AGAIN (06/06), NOT ANYMORE (06/12), AGAIN (06/19)
+					if(soldTo.equalsIgnoreCase("avnetLA") || soldTo.equalsIgnoreCase("664711")) { //ACOM 664711  using English format, NOT ANYMORE (04/20/2012), AGAIN 0n 05/04, NOT ANYMORE (05/16), AGAIN (06/06), NOT ANYMORE (06/12), AGAIN (06/19)
 						temp = nFEng.parse(elements[i]);
 					} else {
 						temp = nFGer.parse(elements[i]);
