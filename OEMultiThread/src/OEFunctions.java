@@ -1,8 +1,11 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -77,10 +80,14 @@ public class OEFunctions {
 	//	System.out.println(priceTables.get(12));  //only for testing, delete afterwards
 	}
 	
-	public static double[] priceArrayBuilder() {
-		double[] priceArray;
+	public static List<Double> priceArrayBuilder(int tableNumber, Set<String>pnSet) {
+		List<Double> priceArray;
 		
-		priceArray = null;
+		priceArray = new ArrayList<Double>();
+		
+		for (String pn : pnSet) {
+			priceArray.add(priceTables.get(tableNumber).get(pn));
+		}
 		
 		return priceArray;
 	}

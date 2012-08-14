@@ -30,6 +30,7 @@ public class FolderReader {
 		String[] newSoldShipArray = new String[2];
 		
 		OEFunctions.tableNumberByShipToBuilder(); //build the table only 1x
+		OEFunctions.priceTablesTableBuilder(); //build the table only 1x
 		
 		for (int i = 1; i<= (orderFiles.length-1); i++) {
 			if (i == (orderFiles.length-1)) {
@@ -60,8 +61,8 @@ public class FolderReader {
 			shipTo = newSoldShipArray[1];
 			
 			//testing building price tables
-			int tableNumber = OEFunctions.tableNumberByShipTo.get(shipTo);
-			OEFunctions.priceTablesTableBuilder();
+			int tableNumber = OEFunctions.tableNumberByShipTo.get(shipTo); // testing only, delete afterwards
+			
 			
 			System.out.println(extension);
 			if (extension.equalsIgnoreCase("pdf")) {

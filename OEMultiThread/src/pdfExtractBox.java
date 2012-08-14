@@ -1,4 +1,7 @@
 import java.io.*;
+import java.util.List;
+import java.util.Set;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
 
@@ -8,6 +11,10 @@ public class pdfExtractBox {
 		String test = null;
 		PDFTextStripper reader = null;
 		String path = "/Users/gustavopinheiro/Desktop/moinho/" + order;
+		Set<String> pnSet;
+		List<Double> prices;
+		
+		int tableNumber = OEFunctions.tableNumberByShipTo.get(shipTo);
 		
             try {
             	reader = new PDFTextStripper("ISO-8859-1");
@@ -17,6 +24,11 @@ public class pdfExtractBox {
                     xmlBuilder.initXML();
                     }
                     xmlBuilder.pnArrayBuilder(test, soldTo);
+                    pnSet = xmlBuilder.hSet;
+                    
+                    prices = OEFunctions.priceArrayBuilder(tableNumber, pnSet);
+                    System.out.println("prices in pdfExtractor: " + prices); //testing only, delete afterwards
+                    
                     xmlBuilder.qtyArrayBuilder(test, order, totalAmount, soldTo);
                     xmlBuilder.elementBuilder(soldTo, shipTo, pO);
                     if (isLast) {
