@@ -1,5 +1,8 @@
 
 import java.io.*;
+import java.util.List;
+import java.util.Set;
+
 import javax.swing.text.rtf.RTFEditorKit;
 
 
@@ -13,6 +16,10 @@ public class rtfExtract {
 		String path = "/Users/gustavopinheiro/Desktop/moinho/" + order;
 		int dot = order.lastIndexOf(".");
 		String extension = order.substring(dot + 1);
+		Set<String> pnSet;
+		List<Double> prices;
+		
+		int tableNumber = OEFunctions.tableNumberByShipTo.get(shipTo);
 			
 		try {
 			com.itextpdf.text.Document document = new com.itextpdf.text.Document();
@@ -29,7 +36,10 @@ public class rtfExtract {
             xmlBuilder.initXML();
             }
             xmlBuilder.pnArrayBuilder(test, soldTo);
-            xmlBuilder.qtyArrayBuilder(test, order, totalAmount, soldTo);
+            pnSet = xmlBuilder.hSet;
+            
+            prices = OEFunctions.priceArrayBuilder(tableNumber, pnSet);
+            xmlBuilder.qtyArrayBuilder(test, order, totalAmount, soldTo, prices);
             xmlBuilder.elementBuilder(soldTo, shipTo, pO);
             if (isLast) {
             xmlBuilder.closeXML();

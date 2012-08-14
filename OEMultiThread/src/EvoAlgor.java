@@ -22,16 +22,16 @@ public class EvoAlgor {
 	static List<Double> qtySol;
 	static List<Double> priceSol;
 	static Set<List<Double>> possibleSolutions;
-	static List<List<Double>> possiblePriceSolutions;
+//	static List<List<Double>> possiblePriceSolutions;
 	static List<List<Integer>> possibleSolutionsIndexes;
 	static List <Integer> localIndexes;
 	static List <Integer> seqQtyCandSet;
-	static List <Integer> seqPriceCandSet;
+//	static List <Integer> seqPriceCandSet;
 	static List <Double> possiSolDiff;
 	static List<ArrayList<Double>> finalSol;
 	
 	@SuppressWarnings("unchecked")
-	public static List<ArrayList<Double>> main(int oSize, Object[] allNumb, String totalAmt, String SoldTo) throws IOException{
+	public static List<ArrayList<Double>> main(int oSize, Object[] allNumb, String totalAmt, String SoldTo, List<Double> prices) throws IOException{
 		double totalSum = 0;
 		boolean fitnessFound = false;
 		int iterations = 0;
@@ -47,7 +47,6 @@ public class EvoAlgor {
 		totalPool = new HashSet<Double>();
 		possibleSolutions = new LinkedHashSet<List<Double>>();
 		finalSol = new ArrayList<ArrayList<Double>>();
-		possiblePriceSolutions = new ArrayList<List<Double>>();
 		possibleSolutionsIndexes = new ArrayList<List<Integer>>();
 		localIndexes = new ArrayList<Integer>();
 		randGenerator = new Random();
@@ -60,7 +59,6 @@ public class EvoAlgor {
 		qtyCandidates = new double[orderSize];
 		priceCandidates = new double[orderSize];
 		seqQtyCandSet = new ArrayList<Integer>();
-		seqPriceCandSet = new ArrayList<Integer>();
 		possiSolDiff = new ArrayList<Double>();
 		
 		allNumbers = new double[allNumb.length];
@@ -101,6 +99,14 @@ public class EvoAlgor {
 			}
 		}	*/
 		
+		//let's use only the predefined prices
+		pricePool.clear();
+		for (double pri : prices) {
+			pricePool.add(pri);
+		}
+		
+		
+		
 		//totalPool can only be created after we have the pricePool
 		if( Double.parseDouble(totalAmt) == 0.0) {
 			double minPriceInPool = Collections.min(pricePool);
@@ -120,7 +126,6 @@ public class EvoAlgor {
 		System.out.println("pricePool = " + pricePool);
 		System.out.println("totalPool = " + totalPool);
 		
-		whileit:
 		while (iterations < 50000000) {
 			iterations++;
 			totalSum = 0;
@@ -135,7 +140,7 @@ public class EvoAlgor {
 				sequencePriceCand[i] = -1;
 			}
 			seqQtyCandSet.clear();
-			seqPriceCandSet.clear();
+//			seqPriceCandSet.clear();
 			
 		// build candidates, ordering sequences
 			//quantity related
@@ -152,17 +157,12 @@ public class EvoAlgor {
 			}
 			
 			//price related
-			for (int k = 0; k < orderSize; k++) {
-				localRand = GenerateValidRand ("price");
-				seqPriceCandSet.add(localRand);
-			}
+
 			
-			Collections.sort(seqPriceCandSet);
-			
-			for (int i : seqPriceCandSet) {
-				priceCandidates[pc] = pricePool.get(i);
+			for (double pri : prices) {
+				priceCandidates[pc] = pri;
 				pc++;
-			}	
+			}
 			
 			//total amount related
 			for (int m = 0; m < orderSize; m++) {
@@ -194,23 +194,16 @@ public class EvoAlgor {
 					qtySol = new ArrayList<Double>();
 					priceSol = new ArrayList<Double>();
 					localIndexes = new ArrayList<Integer>();
-					/*	System.out.println("\nSolution before sorting, for a total Amount = " + totalAmount2 + ":"); //no need to println while not testing, this cuts time
-						for (int n = 0; n < orderSize; n++) {
-							System.out.print( qtyCandidates[n] + ", " + priceCandidates[n] + ", ");
-						}  
-						System.out.println("\nFinally, the Quantities Array:");
-						*/
 						//now the seqQtyCandSet is already ordered, no need to use GetQty2()
 						for (int i : seqQtyCandSet) {
 							qtySol.add(qtyPool.get(i));
 							localIndexes.add(i);
 						}
-						for (int i : seqPriceCandSet) {
-							priceSol.add(pricePool.get(i));
+						for (double pri: prices) {
+							priceSol.add(pri);
 						}
-					//	System.out.print(qtySol);
+
 						if (possibleSolutions.add(qtySol)) {
-							possiblePriceSolutions.add(priceSol);
 							possibleSolutionsIndexes.add(localIndexes);
 							possiSolDiff.add(java.lang.Math.abs(totalAmount2 - totalSum));
 						}
@@ -218,15 +211,13 @@ public class EvoAlgor {
 			//		break whileit;
 				}
 			}
-		/*	if (iterations == 49999999) {
-				System.out.println("no solution found");
-			} */
+
 		}
-		System.out.print("\npossibleSolutions size = "+possibleSolutions.size() + ": "); // + possibleSolutions);
+		System.out.print("\npossibleSolutions size = "+possibleSolutions.size() + ": "); 
 		System.out.print("\npossiSolDiff min = "+Collections.min(possiSolDiff) + ": ");
 		shortestRangePos = findShortestRange2();
 		finalSol.add((ArrayList<Double>) possibleSolutions.toArray()[shortestRangePos]);
-		finalSol.add((ArrayList<Double>) possiblePriceSolutions.toArray()[shortestRangePos]);
+		finalSol.add((ArrayList<Double>) prices);
 		
 		return finalSol;
 	}
@@ -250,29 +241,11 @@ public class EvoAlgor {
 					found++;
 				}
 			}
-		} else if (rqtr.equals("price")){	
-			found = 0;
-			rand = randGenerator.nextInt(pricePool.size());
-			for (int j : seqPriceCandSet) {
-				if (rand == j) {
-					found++;
-				}
-			}
-		}
+		} 
 		} while (!(found == 0));
 		return rand;
 	}
-	private static int findShortestRange() {
-		int index;
-		List<Integer> rangeList = new ArrayList<Integer>();
-		
-		for (List<Integer> localSeqQtycandSet : possibleSolutionsIndexes) {
-			rangeList.add(Collections.max(localSeqQtycandSet) - Collections.min(localSeqQtycandSet));
-		}
-		
-		index = rangeList.lastIndexOf(Collections.min(rangeList));
-		return index;
-	}
+
 	private static int findShortestRange2() {
 		int final_index;
 		double minDif;

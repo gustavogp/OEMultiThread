@@ -203,7 +203,7 @@ public static void getEAN() {
 	}
 }
 
-public static void qtyArrayBuilder(String s, String order, String totalAmount, String soldTo) {
+public static void qtyArrayBuilder(String s, String order, String totalAmount, String soldTo, List<Double> prices) {
 	elements = s.split("\\s+");
 	int j = 0;
 	int i = 0;
@@ -265,7 +265,7 @@ public static void qtyArrayBuilder(String s, String order, String totalAmount, S
 		
 		try {
 			if (hSet.size()>0) {
-				qtyPriceSol = EvoAlgor.main(hSet.size(), allNumbers.toArray(), totalAmount, soldTo);
+				qtyPriceSol = EvoAlgor.main(hSet.size(), allNumbers.toArray(), totalAmount, soldTo, prices);
 			
 				qtySol = qtyPriceSol.get(0);
 				priceSol = qtyPriceSol.get(1);
