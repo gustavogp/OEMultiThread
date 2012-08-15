@@ -3,15 +3,20 @@ import java.io.*;
 import java.util.List;
 import java.util.Set;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
+
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.xml.sax.SAXException;
+
 import com.itextpdf.text.Document;
 
 
 
 public class docxExtract {
 	
-	public static void main(String order, String soldTo, String shipTo, String pO, String totalAmount, boolean isFirst, boolean isLast) throws IOException {
+	public static void main(String order, String soldTo, String shipTo, String pO, String totalAmount, boolean isFirst, boolean isLast) {
 		FileInputStream readStr = null; //POI does not support buffered stream
 		XWPFDocument wDoc = null;
 		XWPFWordExtractor extractor = null;
@@ -45,15 +50,28 @@ public class docxExtract {
             }
 
             document.close();
-		}catch (Exception e) {
-			System.err.format("Exception in Main: %s%n", e);
+		}catch (IOException e) {
+			System.err.format("IOException in docxExtractor: %s%n", e);
 			if ((e.toString().contains("rtf")) || e.toString().contains("RTF")) {
 				System.out.println("Sending to rtfExtract.java");
 				rtfExtract.main( order, soldTo, shipTo, pO, totalAmount, isFirst, isLast);
 			}
-        }finally {
+        } catch (TransformerConfigurationException e) {
+        	System.err.format("TransformerConfigurationException in docxExtractor: %s%n", e);
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			System.err.format("ParserConfigurationException in docxExtractor: %s%n", e);
+			e.printStackTrace();
+		} catch (SAXException e) {
+			System.err.format("SAXException in docxExtractor: %s%n", e);
+			e.printStackTrace();
+		}finally {
         	if (readStr != null) {
-        		readStr.close();
+        		try {
+					readStr.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
         	}
         }
 

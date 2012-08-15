@@ -266,15 +266,19 @@ public static void qtyArrayBuilder(String s, String order, String totalAmount, S
 		try {
 			if (hSet.size()>0) {
 				qtyPriceSol = EvoAlgor.main(hSet.size(), allNumbers.toArray(), totalAmount, soldTo, prices);
-			
-				qtySol = qtyPriceSol.get(0);
-				priceSol = qtyPriceSol.get(1);
+				if (!qtyPriceSol.isEmpty()) {
+					qtySol = qtyPriceSol.get(0);
+					priceSol = qtyPriceSol.get(1);
+				} else {
+					System.out.println("\nWe're in xmlBuilder, qtyArrayBuilder() and EvoAlgor couln't find a solution");
+				}
+				
 			} else {
 				System.out.println("No Valid SKU found on PO " + order + "\nAborting");
 				OEMultiT.noValidSkuMessage(order);
 			}
 		} catch (IOException e) {
-			System.err.format("Exception in xmlBuilder: %s%n", e);
+			System.err.format("Exception in xmlBuilder qtyarraybuilder(): %s%n", e);
 			if ((e.toString().contains("NoSuchElement"))) {
 				System.out.println("No Solution Found");
 			}

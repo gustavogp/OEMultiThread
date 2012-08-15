@@ -2,12 +2,16 @@ import java.io.*;
 import java.util.List;
 import java.util.Set;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
+import org.xml.sax.SAXException;
 
 public class pdfExtractBox {
     
-    public static void main(String order, String soldTo, String shipTo, String pO, String totalAmount, boolean isFirst, boolean isLast) throws IOException {
+    public static void main(String order, String soldTo, String shipTo, String pO, String totalAmount, boolean isFirst, boolean isLast) {
 		String test = null;
 		PDFTextStripper reader = null;
 		String path = "/Users/gustavopinheiro/Desktop/moinho/" + order;
@@ -30,13 +34,25 @@ public class pdfExtractBox {
                     System.out.println("prices in pdfExtractor: " + prices); //testing only, delete afterwards
                     
                     xmlBuilder.qtyArrayBuilder(test, order, totalAmount, soldTo, prices);
-                    xmlBuilder.elementBuilder(soldTo, shipTo, pO);
+                    if (!(xmlBuilder.qty[0] == null)) {
+                    	xmlBuilder.elementBuilder(soldTo, shipTo, pO);
+                    }
                     if (isLast) {
                     xmlBuilder.closeXML();
                     }
                     document.close();
-            } catch (Exception e) {
-            	System.err.format("IOException in Main: %s%n", e);
-            }
+            } catch (IOException e) {
+            	System.err.format("IOException in pdfExtractBox: %s%n", e);
+            	e.printStackTrace();
+            } catch (TransformerConfigurationException e) {
+            	System.err.format("TransformerConfigurationException in pdfExtractBox: %s%n", e);
+				e.printStackTrace();
+			} catch (ParserConfigurationException e) {
+				System.err.format("ParserConfigurationException in pdfExtractBox: %s%n", e);
+				e.printStackTrace();
+			} catch (SAXException e) {
+				System.err.format("SAXException in pdfExtractBox: %s%n", e);
+				e.printStackTrace();
+			}
     }
 }

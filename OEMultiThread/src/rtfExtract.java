@@ -3,12 +3,17 @@ import java.io.*;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.text.BadLocationException;
 import javax.swing.text.rtf.RTFEditorKit;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
+
+import org.xml.sax.SAXException;
 
 
 public class rtfExtract {
 	
-	public static void main(String order, String soldTo, String shipTo, String pO, String totalAmount, boolean isFirst, boolean isLast) throws IOException {
+	public static void main(String order, String soldTo, String shipTo, String pO, String totalAmount, boolean isFirst, boolean isLast) {
 		RTFEditorKit rtfEd = null;
 		javax.swing.text.Document rtfDoc = null;
 		FileInputStream readStr = null;
@@ -49,11 +54,28 @@ public class rtfExtract {
             }
 
             document.close();
-		}catch (Exception e) {
-			System.err.format("Exception in Main: %s%n", e);
-        }finally {
+		}catch (IOException e) {
+			System.err.format("IOException in rtfExtract: %s%n", e);
+			e.printStackTrace();
+        } catch (BadLocationException e) {
+        	System.err.format("BadLocationException in rtfExtract: %s%n", e);
+			e.printStackTrace();
+		} catch (TransformerConfigurationException e) {
+			System.err.format("TransformerConfigurationException in rtfExtract: %s%n", e);
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			System.err.format("ParserConfigurationException in rtfExtract: %s%n", e);
+			e.printStackTrace();
+		} catch (SAXException e) {
+			System.err.format("SAXException in rtfExtract: %s%n", e);
+			e.printStackTrace();
+		}finally {
         	if (readStr != null) {
-        		readStr.close();
+        		try {
+					readStr.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
         	}
         }
 

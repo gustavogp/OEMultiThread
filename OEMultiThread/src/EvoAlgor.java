@@ -182,11 +182,11 @@ public class EvoAlgor {
 					lowerLimit = 0.999*totalAmount2;
 					upperLimit = 1.001*totalAmount2;
 				} else if (totalAmount2 < 1000000) {
-					lowerLimit = 0.9999*totalAmount2;
-					upperLimit = 1.0001*totalAmount2;
-				} else if (totalAmount2 < 20000000) {
 					lowerLimit = 0.999*totalAmount2;
-					upperLimit = 1.001*totalAmount2;	//leaving the same limits as for orders above 100K for testing, since I'm having trouble with orders >1M
+					upperLimit = 1.001*totalAmount2;
+				} else if (totalAmount2 < 20000000) {
+					lowerLimit = 0.9999*totalAmount2;
+					upperLimit = 1.0001*totalAmount2;	//leaving the same limits as for orders above 100K for testing, since I'm having trouble with orders >1M
 				}
 				
 				fitnessFound = (totalSum >= lowerLimit && totalSum <= upperLimit);
@@ -214,10 +214,15 @@ public class EvoAlgor {
 
 		}
 		System.out.print("\npossibleSolutions size = "+possibleSolutions.size() + ": "); 
-		System.out.print("\npossiSolDiff min = "+Collections.min(possiSolDiff) + ": ");
-		shortestRangePos = findShortestRange2();
-		finalSol.add((ArrayList<Double>) possibleSolutions.toArray()[shortestRangePos]);
-		finalSol.add((ArrayList<Double>) prices);
+		if (possibleSolutions.size()>0) {
+			System.out.print("\npossiSolDiff min = "+Collections.min(possiSolDiff) + ": ");
+			shortestRangePos = findShortestRange2();
+			finalSol.add((ArrayList<Double>) possibleSolutions.toArray()[shortestRangePos]);
+			finalSol.add((ArrayList<Double>) prices);
+		} else {
+			System.out.println("\nWe're in Evoalgor and no solution was found for this PO!!!!!");
+		}
+		
 		
 		return finalSol;
 	}

@@ -2,7 +2,11 @@ import java.io.*;
 import java.util.List;
 import java.util.Set;
 
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.*;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.sax.*;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
@@ -12,8 +16,13 @@ public class pdfExtract {
     static AttributesImpl atts;
     
 
-    public static void main(String order, String soldTo, String shipTo, String pO, String totalAmount, boolean isFirst, boolean isLast) throws IOException {
-    	PdfReader reader = new PdfReader("/Users/gustavopinheiro/Desktop/Pedido Apple - ES 45_38311_02.09.11.pdf");
+    public static void main(String order, String soldTo, String shipTo, String pO, String totalAmount, boolean isFirst, boolean isLast) {
+    	PdfReader reader = null;
+		try {
+			reader = new PdfReader("/Users/gustavopinheiro/Desktop/Pedido Apple - ES 45_38311_02.09.11.pdf");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
     	Set<String> pnSet;
 		List<Double> prices;
 		
@@ -47,9 +56,22 @@ public class pdfExtract {
                     xmlBuilder.closeXML();
                     document.add(new Paragraph(".."));
                     document.close();
-            } catch (Exception e) {
-            	System.err.format("IOException in Main: %s%n", e);
-            }finally {
+            } catch (IOException e) {
+            	System.err.format("IOException in pdfExtract: %s%n", e);
+            	e.printStackTrace();
+            } catch (TransformerConfigurationException e) {
+            	System.err.format("TransformerConfigurationException in pdfExtract: %s%n", e);
+				e.printStackTrace();
+			} catch (ParserConfigurationException e) {
+				System.err.format("ParserConfigurationException in pdfExtract: %s%n", e);
+				e.printStackTrace();
+			} catch (SAXException e) {
+				System.err.format("SAXException in pdfExtract: %s%n", e);
+				e.printStackTrace();
+			} catch (DocumentException e) {
+				System.err.format("DocumentException in pdfExtract: %s%n", e);
+				e.printStackTrace();
+			}finally {
             	if (reader != null) {
             		reader.close();
             	}

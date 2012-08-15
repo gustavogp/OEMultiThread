@@ -2,6 +2,11 @@ import java.io.*;
 import java.util.List;
 import java.util.Set;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import com.itextpdf.text.Document;
 
 
@@ -9,7 +14,7 @@ import com.itextpdf.text.Document;
 
 public class htmlExtract {
 	
-	public static void main(String order, String soldTo, String shipTo, String pO, String totalAmount, boolean isFirst, boolean isLast) throws IOException {
+	public static void main(String order, String soldTo, String shipTo, String pO, String totalAmount, boolean isFirst, boolean isLast) {
 		BufferedReader readStrBuff =null;
 		StringBuilder strBuff = null;
 		String test = null;
@@ -42,11 +47,25 @@ public class htmlExtract {
             xmlBuilder.closeXML();
             }
             document.close();
-		}catch (Exception e) {
-			System.err.format("IOException in Main: %s%n", e);
-        }finally {
+		}catch (IOException e) {
+			System.err.format("IOException in htmlExtractor: %s%n", e);
+			e.printStackTrace();
+        } catch (TransformerConfigurationException e) {
+        	System.err.format("TransformerConfigurationException in htmlExtractor: %s%n", e);
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			System.err.format("ParserConfigurationException in htmlExtractor: %s%n", e);
+			e.printStackTrace();
+		} catch (SAXException e) {
+			System.err.format("SAXException in htmlExtractor: %s%n", e);
+			e.printStackTrace();
+		}finally {
         	if (readStrBuff != null) {
-        		readStrBuff.close();
+        		try {
+					readStrBuff.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
         	}
         }
 
