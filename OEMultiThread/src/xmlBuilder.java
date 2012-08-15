@@ -283,6 +283,7 @@ public static void qtyArrayBuilder(String s, String order, String totalAmount, S
 				System.out.println("No Solution Found");
 			}
 		}
+		
 		if (!qtySol.isEmpty()) {
 			for (double qty2: qtySol) {
 				qty[j] = Integer.toString((new Double(qty2)).intValue());
@@ -292,7 +293,12 @@ public static void qtyArrayBuilder(String s, String order, String totalAmount, S
 				price[k] = Double.toString((new Double(price2)));
 				k++;
 			}
-		} 
+		} else {
+			for (int g = 0; g<hSet.size(); g++) {
+				qty[g] = String.valueOf(0);
+				price[g] = String.valueOf(0);
+			}
+		}
 }
 
 public static int findFirstIndex (String[] elements) {

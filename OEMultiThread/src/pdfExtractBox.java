@@ -34,9 +34,8 @@ public class pdfExtractBox {
                     System.out.println("prices in pdfExtractor: " + prices); //testing only, delete afterwards
                     
                     xmlBuilder.qtyArrayBuilder(test, order, totalAmount, soldTo, prices);
-                    if (!(xmlBuilder.qty[0] == null)) {
-                    	xmlBuilder.elementBuilder(soldTo, shipTo, pO);
-                    }
+                    xmlBuilder.elementBuilder(soldTo, shipTo, pO);
+
                     if (isLast) {
                     xmlBuilder.closeXML();
                     }
