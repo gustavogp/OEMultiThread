@@ -119,7 +119,12 @@ public class EvoAlgor {
 				}
 			}
 		} else {
-			totalPool.add(Double.parseDouble(totalAmt)/100); // divide by 100 to account for cents
+			//testing to remove IPI for bompreco 
+			if (soldTo.equals("664681") || soldTo.equals("664683")) {
+				totalPool.add(Double.parseDouble(totalAmt)/100/1.15);
+			} else {
+				totalPool.add(Double.parseDouble(totalAmt)/100); // divide by 100 to account for cents
+			}
 		}
 		
 		System.out.println("qtyPool = " + qtyPool);

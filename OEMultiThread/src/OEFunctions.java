@@ -76,6 +76,8 @@ public class OEFunctions {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (NullPointerException e) {
+			System.err.println("Missing prices for some items in priceTablesTableBuilder()");
 		}
 	//	System.out.println(priceTables.get(12));  //only for testing, delete afterwards
 	}
@@ -85,9 +87,14 @@ public class OEFunctions {
 		
 		priceArray = new ArrayList<Double>();
 		
-		for (String pn : pnSet) {
-			priceArray.add(priceTables.get(tableNumber).get(pn));
+		try {
+			for (String pn : pnSet) {
+				priceArray.add(priceTables.get(tableNumber).get(pn));
+			}
+		} catch (NullPointerException e) {
+			System.err.println("Some items will have a null pointer on the priceArray");
 		}
+		
 		
 		return priceArray;
 	}

@@ -112,7 +112,7 @@ public static void pnArrayBuilder(String s, String soldTo) {
 	
 	buildEanMap();
 	
-	if (!(lSoldTo.equalsIgnoreCase("avnet") || lSoldTo.equalsIgnoreCase("664692") || lSoldTo.equalsIgnoreCase("662803"))) {	//avnet uses EAN and PN only in some SKUs, others have only PN: Officer sometimes gets a "concatenate" error, so it's included here
+	if (!(lSoldTo.equalsIgnoreCase("664689") || lSoldTo.equalsIgnoreCase("662803"))) {	//Walmart EAN are wrong: Officer sometimes gets a "concatenate" error, so it's included here
 		if (eanlen!=0) {
 			hSet.clear(); //clear this set to start from empty with the EAN
 			eanToPn();

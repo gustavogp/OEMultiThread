@@ -48,7 +48,12 @@ public class docExtract {
             }
 
             document.close();
-		}catch (IOException e) {
+		} catch(IllegalArgumentException e) {
+			System.err.format("IllegalArgumentException in docExtractor", e);
+			e.printStackTrace();
+			System.out.println("Sending to rtfExtract.java");
+			rtfExtract.main( order, soldTo, shipTo, pO, totalAmount, isFirst, isLast);
+		} catch (IOException e) {
 			System.err.format("IOException in docExtractor: %s%n", e);
 			if ((e.toString().contains("rtf")) || e.toString().contains("RTF")) {
 				System.out.println("Sending to rtfExtract.java");
