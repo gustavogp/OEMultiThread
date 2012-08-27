@@ -60,12 +60,13 @@ public class OEFunctions {
 			wb = new XSSFWorkbook(readStr);
 			priceListSheet = wb.getSheetAt(0);
 			
-			for (int i = 0; i < 22; i++) {
+			for (int i = 0; i < 23; i++) {
 				Map<String, Double> priceTableI = new LinkedHashMap<String, Double>();
 				for (Row row : priceListSheet) {
 					if (row.getRowNum() > 3) {
 						pn = row.getCell(3).getStringCellValue();
 						price = row.getCell(i+12).getNumericCellValue();
+						price = (double)Math.round(price*100)/100;
 						priceTableI.put(pn, price);
 					}
 				}
