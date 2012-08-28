@@ -100,11 +100,19 @@ public class EvoAlgor {
 		}	*/
 		
 		//let's use only the predefined prices
+		try {
 		pricePool.clear();
 		for (double pri : prices) {
 			pricePool.add(pri);
 		}
-		
+		} catch (NullPointerException e) {
+			System.err.println("Prices array was null in EvoAlgor(), filling prices with 0");
+			for (int i = 0; i<orderSize; i++) {
+				pricePool.add(0.0);
+				prices.add(i, 0.0);
+			}
+			prices.remove(orderSize);
+		}
 		
 		
 		//totalPool can only be created after we have the pricePool
