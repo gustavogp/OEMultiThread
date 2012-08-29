@@ -17,7 +17,7 @@ public class OEFunctions {
 	
 	public static void tableNumberByShipToBuilder() {
 		tableNumberByShipTo = new LinkedHashMap<String, Integer>();
-		String soldPath = OEMultiT.inputPath.getParent() + "/soldToMap.xlsx";
+		String soldPath = OEMultiT.inputPath.getParent() + "/OE_Java/soldToMap.xlsx";
 		FileInputStream readStr = null; //POI does not support buffered stream
 		XSSFWorkbook wb = null;
 		XSSFSheet tableNumberSheet = null;
@@ -48,7 +48,7 @@ public class OEFunctions {
 	}
 	public static void priceTablesTableBuilder() {
 		priceTables = new LinkedHashMap<Integer, Map<String,Double>>();
-		String soldPath = OEMultiT.inputPath.getParent() + "/ListaPrecoMaster2012_06_22.xlsx";
+		String soldPath = OEMultiT.inputPath.getParent() + "/OE_Java/ListaPrecoMaster.xlsx";
 		FileInputStream readStr = null; //POI does not support buffered stream
 		XSSFWorkbook wb = null;
 		XSSFSheet priceListSheet = null;
@@ -70,7 +70,6 @@ public class OEFunctions {
 						priceTableI.put(pn, price);
 					}
 				}
-			//	System.out.println(priceTableI); //only for testing, delete afterwards
 				priceTables.put(i, priceTableI);
 			}
 		} catch (FileNotFoundException e) {
@@ -80,7 +79,6 @@ public class OEFunctions {
 		} catch (NullPointerException e) {
 			System.err.println("Missing prices for some items in priceTablesTableBuilder()");
 		}
-	//	System.out.println(priceTables.get(12));  //only for testing, delete afterwards
 	}
 	
 	public static List<Double> priceArrayBuilder(int tableNumber, Set<String>pnSet) {

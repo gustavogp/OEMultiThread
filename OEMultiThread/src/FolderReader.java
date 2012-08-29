@@ -7,7 +7,6 @@ public class FolderReader {
  * determines type of each file
  * calls designated extractor for each file
  */
-	//public static final File inputPath = new File ("/Users/gustavopinheiro/Desktop/moinho");
 	public static String[] orderFiles = new String[100];
 	public static boolean isFirstOrder;
 	public static boolean isLastOrder;

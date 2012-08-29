@@ -21,7 +21,7 @@ public class ChangeFileName {
 	public static void buildSoldAndShipMaps () {
 		soldToMap = new LinkedHashMap<String, String>();
 		shipToMap = new LinkedHashMap<String, String>();
-		String soldPath = OEMultiT.inputPath.getParent() + "/soldToMap.xlsx";
+		String soldPath = OEMultiT.inputPath.getParent() + "/OE_Java/soldToMap.xlsx";
 		FileInputStream readStr = null; //POI does not support buffered stream
 		XSSFWorkbook wb = null;
 		XSSFSheet soldSheet = null;
@@ -68,8 +68,6 @@ public class ChangeFileName {
 					}
 
 				}
-			//	System.out.println( soldToMap);
-			//	System.out.println( shipToMap);
 
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -105,20 +103,6 @@ public class ChangeFileName {
 			newShipTo = shipToMap.get(shipConcat);
 			//rename
 			System.out.println(newSoldTo + ", " + newShipTo);
-		/*	file = new File(orderFiles[i]);
-			if (file.canExecute() && file.canRead() && file.canWrite()) {
-				if (file.renameTo(new File(OEMultiT.inputPath + "/" + newSoldTo + "." + newShipTo + "." + pO + "." + totalAmount + "." + extension))) {
-					System.out.println("changing file name to " + file.getName());	
-				}
-			} else System.out.println("sem acesso");
-			
-			file.setWritable(true, true);
-			if (file.canExecute() && file.canRead() && file.canWrite()) {
-				if (file.renameTo(new File(OEMultiT.inputPath + "/" + newSoldTo + "." + newShipTo + "." + pO + "." + totalAmount + "." + extension))) {
-					System.out.println("changing file name to " + file.getName());	
-				}
-			} else System.out.println("ainda sem acesso");
-			System.out.println("trying to change file name to " + file.getName()); */
 		} 
 	}
 	public static String[] changeSoldTo(String st, String shpt) {
