@@ -19,7 +19,7 @@ public class htmlExtract {
 		StringBuilder strBuff = null;
 		String test = null;
 		char[] strArray = new char[100000];
-		String path = "/Users/gustavopinheiro/Desktop/moinho/" + order;
+		String path = OEMultiT.inputPath + "/" + order;
 		Set<String> pnSet;
 		List<Double> prices;
 		

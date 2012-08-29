@@ -18,7 +18,7 @@ public class docExtract {
 		FileInputStream readStr = null; //POI does not support buffered stream
 		WordExtractor extractor = null;
 		String test = null;
-		String path = "/Users/gustavopinheiro/Desktop/moinho/" + order;
+		String path = OEMultiT.inputPath + "/" + order;
 		Set<String> pnSet;
 		List<Double> prices;
 		

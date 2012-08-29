@@ -21,7 +21,7 @@ public class xlsxExtractor {
 		FileInputStream readStr = null; //POI does not support buffered stream
 		XSSFEventBasedExcelExtractor extractor = null;
 		String test = null;
-		String path = "/Users/gustavopinheiro/Desktop/moinho/" + order;
+		String path = OEMultiT.inputPath + "/" + order;
 		Set<String> pnSet;
 		List<Double> prices;
 		

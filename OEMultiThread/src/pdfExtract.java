@@ -19,7 +19,7 @@ public class pdfExtract {
     public static void main(String order, String soldTo, String shipTo, String pO, String totalAmount, boolean isFirst, boolean isLast) {
     	PdfReader reader = null;
 		try {
-			reader = new PdfReader("/Users/gustavopinheiro/Desktop/Pedido Apple - ES 45_38311_02.09.11.pdf");
+			reader = new PdfReader(OEMultiT.inputPath + "/" + order);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

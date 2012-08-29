@@ -21,7 +21,7 @@ public class docxExtract {
 		XWPFDocument wDoc = null;
 		XWPFWordExtractor extractor = null;
 		String test = null;
-		String path = "/Users/gustavopinheiro/Desktop/moinho/" + order;
+		String path = OEMultiT.inputPath + "/" + order;
 		Set<String> pnSet;
 		List<Double> prices;
 		

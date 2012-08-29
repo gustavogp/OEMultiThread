@@ -18,7 +18,7 @@ public class rtfExtract {
 		javax.swing.text.Document rtfDoc = null;
 		FileInputStream readStr = null;
 		String test = null;
-		String path = "/Users/gustavopinheiro/Desktop/moinho/" + order;
+		String path = OEMultiT.inputPath + "/" + order;
 		int dot = order.lastIndexOf(".");
 		String extension = order.substring(dot + 1);
 		Set<String> pnSet;

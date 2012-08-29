@@ -14,7 +14,7 @@ public class pdfExtractBox {
     public static void main(String order, String soldTo, String shipTo, String pO, String totalAmount, boolean isFirst, boolean isLast) {
 		String test = null;
 		PDFTextStripper reader = null;
-		String path = "/Users/gustavopinheiro/Desktop/moinho/" + order;
+		String path = OEMultiT.inputPath + "/" + order;
 		Set<String> pnSet;
 		List<Double> prices;
 		
