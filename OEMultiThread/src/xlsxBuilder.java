@@ -30,7 +30,7 @@ public class xlsxBuilder extends DefaultHandler {
 			xr = XMLReaderFactory.createXMLReader();
 			xr.setContentHandler(new xlsxBuilder());
 						
-			dataReader = new FileReader("/Users/gustavopinheiro/Desktop/data.xml");
+			dataReader = new FileReader(OEMultiT.inputPath.getParent() + "/data.xml");
 			xr.parse(new InputSource(dataReader));
 			     
 			
@@ -60,7 +60,7 @@ public class xlsxBuilder extends DefaultHandler {
 
     public void endDocument()  throws SAXException{
     	try {
-    	fileOut = new FileOutputStream("/Users/gustavopinheiro/Desktop/output_excel/batch" + String.valueOf((todayNow.get(Calendar.MONTH)+1)) + String.valueOf(todayNow.get(Calendar.DAY_OF_MONTH)) + 
+    	fileOut = new FileOutputStream(OEMultiT.inputPath.getParent() + "/output_excel/batch" + String.valueOf((todayNow.get(Calendar.MONTH)+1)) + String.valueOf(todayNow.get(Calendar.DAY_OF_MONTH)) + 
 																	String.valueOf(todayNow.get(Calendar.HOUR_OF_DAY)) + String.valueOf(todayNow.get(Calendar.MINUTE)) + ".xlsx");
         wb.write(fileOut);
         fileOut.close();

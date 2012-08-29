@@ -42,7 +42,7 @@ public static void initXML() throws ParserConfigurationException,
         .newInstance();
 	
 		handler = tf.newTransformerHandler();
-		streamResult = new StreamResult("/Users/gustavopinheiro/Desktop/data.xml");
+		streamResult = new StreamResult(OEMultiT.inputPath.getParent() + "/data.xml");
 		Transformer serializer = handler.getTransformer();
 		serializer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
 		serializer.setOutputProperty(
@@ -126,7 +126,7 @@ public static void pnArrayBuilder(String s, String soldTo) {
 public static void buildEanMap(){
 	XSSFEventBasedExcelExtractor extractor = null;
 	String searchMe = null;
-	String path = "/Users/gustavopinheiro/Documents/BRAZIL/Lista Precos/PNxEAN 2012-03-14.xlsx";
+	String path = OEMultiT.inputPath.getParent() + "/OE_Java/PNxEAN.xlsx";
 
 	
 	try {

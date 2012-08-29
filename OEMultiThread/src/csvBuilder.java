@@ -59,7 +59,7 @@ public class csvBuilder extends DefaultHandler {
 			xr = XMLReaderFactory.createXMLReader();
 			xr.setContentHandler(new csvBuilder());
 						
-			dataReader = new FileReader("/Users/gustavopinheiro/Desktop/data.xml");
+			dataReader = new FileReader(OEMultiT.inputPath.getParent() + "/data.xml");
 			xr.parse(new InputSource(dataReader));
 			     
 			
@@ -88,7 +88,7 @@ public class csvBuilder extends DefaultHandler {
 	
     } else if ("Order".equals (qName)) {
     	try {
-        	fileOut = new FileWriter("/Users/gustavopinheiro/Desktop/output_csv/batch" + String.valueOf((todayNow.get(Calendar.MONTH)+1)) + String.valueOf(todayNow.get(Calendar.DAY_OF_MONTH)) + 
+        	fileOut = new FileWriter(OEMultiT.inputPath.getParent() + "/output_csv/batch" + String.valueOf((todayNow.get(Calendar.MONTH)+1)) + String.valueOf(todayNow.get(Calendar.DAY_OF_MONTH)) + 
     																	String.valueOf(todayNow.get(Calendar.HOUR_OF_DAY)) + String.valueOf(todayNow.get(Calendar.MINUTE)) + 
     																	"_" + String.valueOf(orderCounter) + ".csv");
         	orderCounter++;
