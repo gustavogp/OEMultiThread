@@ -199,7 +199,7 @@ public static void eanToPn () {
 public static void getEAN() {
 	hTempSet.clear();
 	for (String searchPnInMap : hSet) {
-		hTempSet.add(pnMap.get(searchPnInMap));
+		hTempSet.add(pnMap.get(searchPnInMap) != null ? pnMap.get(searchPnInMap) : "no UPC - Invalid SKU");
 	}
 }
 
