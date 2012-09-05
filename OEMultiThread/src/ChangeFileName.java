@@ -1,4 +1,4 @@
-import java.io.File;
+//import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -78,7 +78,7 @@ public class ChangeFileName {
 		}
 		
 	}
-	public static void changeFileNames() {
+/*	public static void changeFileNames() {
 		String[] orderFiles = new String[100];
 		File file;
 		
@@ -104,8 +104,8 @@ public class ChangeFileName {
 			//rename
 			System.out.println(newSoldTo + ", " + newShipTo);
 		} 
-	}
-	public static String[] changeSoldTo(String st, String shpt) {
+	} */
+	public static String[] changeSoldTo(String st, String shpt) throws NullPointerException {
 		String[] newSoldShip = new String[2];
 		String shipConcat = st + shpt;
 		newSoldShip[0] = soldToMap.get(st);

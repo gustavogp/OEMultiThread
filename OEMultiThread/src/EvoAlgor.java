@@ -107,7 +107,10 @@ public class EvoAlgor {
 		}
 				
 		} catch (NullPointerException e) {
-			pricePool.add(0.0);
+			pricePool.clear();
+			for (int s = 0; s< prices.size(); s++) {
+				pricePool.add(0.0); //if any element of prices is null, all the elements of pricePool will be 0.0
+			}
 		}
 		
 		prices.clear();
