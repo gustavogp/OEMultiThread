@@ -59,9 +59,11 @@ public class FolderReader {
 			try {
 				newSoldShipArray = ChangeFileName.changeSoldTo(soldTo, shipTo);
 				int lenghtTest = newSoldShipArray[0].length(); //using this just to trigger the NullPointer Exception
+				int lenghtTest2 = newSoldShipArray[1].length(); //using this just to trigger the NullPointer Exception
 			} catch (NullPointerException e) {
 				System.out.println("Invalid Sold-To or Ship-To: " + soldTo + ", " + shipTo);
-				soldShipOk = false; //this will interrupt this iteration of the loop
+				OEMultiT.invalidSoldShipMessage(soldTo, shipTo);
+				soldShipOk = false; //this will interrupt this iteration of the loop, could have used resume
 				break;//this will stop the loop for the remaining orders
 			}
 			

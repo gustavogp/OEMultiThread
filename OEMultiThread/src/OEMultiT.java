@@ -115,6 +115,9 @@ public class OEMultiT extends JPanel implements ActionListener {
 	public static void noValidSkuMessage (String order) {
 		log.append("No Valid SKU found on PO " + order + newline);
 	}
+	public static void invalidSoldShipMessage (String soldTo, String shipTo) {
+		log.append("Invalid Sold-To or Ship-To " + soldTo + ", " + shipTo + newline);
+	}
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run () {
