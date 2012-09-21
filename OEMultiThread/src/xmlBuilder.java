@@ -238,25 +238,25 @@ public static void qtyArrayBuilder(String s, String order, String totalAmount, S
 				try {
 					if(soldTo.equalsIgnoreCase("avnetLA") || soldTo.equalsIgnoreCase("664711")) { //ACOM 664711  using English format, NOT ANYMORE (04/20/2012), AGAIN 0n 05/04, NOT ANYMORE (05/16), AGAIN (06/06), NOT ANYMORE (06/12), AGAIN (06/19)
 						//excluding elements that are not pure integers
-						if(!(elements[i].contains("%")) && !(elements[i].contains("/")) && !(elements[i].contains("[a-zA-Z]")) && !(elements[i].contains("\""))){
+						if(!(elements[i].contains("%")) && !(elements[i].contains("/")) && !(elements[i].contains("G")) && !(elements[i].contains("\""))){
 							temp = nFEng.parse(elements[i]);
 						}
 					} else {
 						//excluding elements that are not pure integers
-						if(!(elements[i].contains("%")) && !(elements[i].contains("/")) && !(elements[i].contains("[a-zA-Z]")) && !(elements[i].contains("\""))){
+						if(!(elements[i].contains("%")) && !(elements[i].contains("/")) && !(elements[i].contains("G")) && !(elements[i].contains("\""))){
 							temp = nFGer.parse(elements[i]);
 						}
 					}
 					
 					if ( temp.getClass().getName() == "java.lang.Double" && !temp.equals (Double.valueOf(0.0))) {
-						if (!((soldTo.equalsIgnoreCase("fnac") || soldTo.equalsIgnoreCase("664715")) && (Double)temp == 210.0)) {
-							allNumbers.add((Double) temp);
+						if (!((soldTo.equalsIgnoreCase("fnac") || soldTo.equalsIgnoreCase("664715")) && (Double)temp == 210.0)) { 
+						//	allNumbers.add((Double) temp);
 						}
-					} else if ( temp.getClass().getName() == "java.lang.Long" && !temp.equals(Long.valueOf(0))) {
+					}  else if ( temp.getClass().getName() == "java.lang.Long" && !temp.equals(Long.valueOf(0))) {
 						if (!((soldTo.equalsIgnoreCase("fnac") || soldTo.equalsIgnoreCase("664715")) && (Long)temp == 210)) {
 							allNumbers.add(Double.valueOf((temp).toString()));
 						}
-					} 
+					}  
 				} catch (ParseException e1) {
 					//do nothing
 				} catch (ClassCastException e) {
