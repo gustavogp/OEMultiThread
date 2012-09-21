@@ -237,9 +237,15 @@ public static void qtyArrayBuilder(String s, String order, String totalAmount, S
 			try {
 				try {
 					if(soldTo.equalsIgnoreCase("avnetLA") || soldTo.equalsIgnoreCase("664711")) { //ACOM 664711  using English format, NOT ANYMORE (04/20/2012), AGAIN 0n 05/04, NOT ANYMORE (05/16), AGAIN (06/06), NOT ANYMORE (06/12), AGAIN (06/19)
-						temp = nFEng.parse(elements[i]);
+						//excluding elements that are not pure integers
+						if(!(elements[i].contains("%")) && !(elements[i].contains("/")) && !(elements[i].contains("[a-zA-Z]")) && !(elements[i].contains("\""))){
+							temp = nFEng.parse(elements[i]);
+						}
 					} else {
-						temp = nFGer.parse(elements[i]);
+						//excluding elements that are not pure integers
+						if(!(elements[i].contains("%")) && !(elements[i].contains("/")) && !(elements[i].contains("[a-zA-Z]")) && !(elements[i].contains("\""))){
+							temp = nFGer.parse(elements[i]);
+						}
 					}
 					
 					if ( temp.getClass().getName() == "java.lang.Double" && !temp.equals (Double.valueOf(0.0))) {

@@ -83,7 +83,7 @@ public class TextBag {
         }	*/
 		
 			/** html extractor **/
-		try {
+/*		try {
 			Document document = new Document();
             document.open();
             
@@ -104,9 +104,9 @@ public class TextBag {
         		readStrBuff.close();
         	}
         }
-
+*/
 		/**pdf extractor**/
-/*		try {          
+		try {          
             String path = "/Users/gustavopinheiro/Desktop/moinho/bag.pdf";
             
         	reader = new PDFTextStripper("ISO-8859-1");
@@ -120,7 +120,7 @@ public class TextBag {
         } catch (Exception e) {
         	System.err.format("IOException in Main: %s%n", e);
         }  
-	*/	
+		
 		/**rtf extractor **/
 /*		try {
 			String path = "/Users/gustavopinheiro/Desktop/moinho/bag.rtf";
