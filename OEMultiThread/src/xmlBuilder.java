@@ -247,16 +247,20 @@ public static void qtyArrayBuilder(String s, String order, String totalAmount, S
 							temp = nFGer.parse(elements[i]);
 						}
 					}
-					
-					if ( temp.getClass().getName() == "java.lang.Double" && !temp.equals (Double.valueOf(0.0))) {
-						if (!((soldTo.equalsIgnoreCase("fnac") || soldTo.equalsIgnoreCase("664715")) && (Double)temp == 210.0)) { 
-						//	allNumbers.add((Double) temp);
+					try {
+						if ( temp.getClass().getName() == "java.lang.Double" && !temp.equals (Double.valueOf(0.0))) {
+							if (!((soldTo.equalsIgnoreCase("fnac") || soldTo.equalsIgnoreCase("664715")) && (Double)temp == 210.0)) { 
+							//	allNumbers.add((Double) temp);
+							}
+						}  else if ( temp.getClass().getName() == "java.lang.Long" && !temp.equals(Long.valueOf(0))) {
+							if (!((soldTo.equalsIgnoreCase("fnac") || soldTo.equalsIgnoreCase("664715")) && (Long)temp == 210)) {
+								allNumbers.add(Double.valueOf((temp).toString()));
+							}
 						}
-					}  else if ( temp.getClass().getName() == "java.lang.Long" && !temp.equals(Long.valueOf(0))) {
-						if (!((soldTo.equalsIgnoreCase("fnac") || soldTo.equalsIgnoreCase("664715")) && (Long)temp == 210)) {
-							allNumbers.add(Double.valueOf((temp).toString()));
-						}
-					}  
+					} catch (NullPointerException e) {
+						//do nothing for while
+					}
+					  
 				} catch (ParseException e1) {
 					//do nothing
 				} catch (ClassCastException e) {
