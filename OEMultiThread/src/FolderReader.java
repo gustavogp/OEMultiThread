@@ -37,19 +37,35 @@ public class FolderReader {
 			if (i == (orderFiles.length-1)) {
 				isLastOrder = true;
 			}
-			int dot = orderFiles[i].indexOf(".");
-			String soldTo = orderFiles[i].substring(0, dot);
-			String remaining1 = orderFiles[i].substring(dot + 1);
-			dot = remaining1.indexOf(".");
-			String shipTo = remaining1.substring(0, dot);
-			String remaining2 = remaining1.substring(dot + 1);
-			dot = remaining2.indexOf(".");
-			String pO = remaining2.substring(0, dot);
-			String remaining3 = remaining2.substring(dot +1);
-			dot = remaining3.indexOf('.');
-			String totalAmount = remaining3.substring(0, dot);
-			dot = orderFiles[i].lastIndexOf(".");
-			String extension = orderFiles[i].substring(dot + 1);
+			int dot = 0;
+			String soldTo = null;
+			String remaining1 = null;
+			String shipTo = null;
+			String remaining2 = null;
+			String pO = null;
+			String remaining3 = null;
+			String totalAmount = null;
+			String extension = null;
+			
+			try {
+				dot = orderFiles[i].indexOf(".");
+				soldTo = orderFiles[i].substring(0, dot);
+				remaining1 = orderFiles[i].substring(dot + 1);
+				dot = remaining1.indexOf(".");
+				shipTo = remaining1.substring(0, dot);
+				remaining2 = remaining1.substring(dot + 1);
+				dot = remaining2.indexOf(".");
+				pO = remaining2.substring(0, dot);
+				remaining3 = remaining2.substring(dot +1);
+				dot = remaining3.indexOf('.');
+				totalAmount = remaining3.substring(0, dot);
+				dot = orderFiles[i].lastIndexOf(".");
+				extension = orderFiles[i].substring(dot + 1);
+			} catch (StringIndexOutOfBoundsException e) {
+				System.err.format("IOException in Main: %s%n", e);
+				OEMultiT.invalidFineNameMessage();
+			}
+			
 			
 			//change file name
 			newSoldShipArray[0] = null;
@@ -59,7 +75,9 @@ public class FolderReader {
 			
 			try {
 				newSoldShipArray = ChangeFileName.changeSoldTo(soldTo, shipTo);
+				@SuppressWarnings("unused")
 				int lenghtTest = newSoldShipArray[0].length(); //using this just to trigger the NullPointer Exception
+				@SuppressWarnings("unused")
 				int lenghtTest2 = newSoldShipArray[1].length(); //using this just to trigger the NullPointer Exception
 			} catch (NullPointerException e) {
 				System.out.println("Invalid Sold-To or Ship-To: " + soldTo + ", " + shipTo);
