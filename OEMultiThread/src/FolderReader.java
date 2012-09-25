@@ -23,6 +23,7 @@ public class FolderReader {
 		selectExtractor();
 		} catch (IOException e) {
 			System.err.format("IOException in Main: %s%n", e);
+			OEMultiT.invalidFineNameMessage();
 		}
 	}
 	public static void selectExtractor () throws IOException {
