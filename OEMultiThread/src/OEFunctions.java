@@ -17,7 +17,14 @@ public class OEFunctions {
 	
 	public static void tableNumberByShipToBuilder() {
 		tableNumberByShipTo = new LinkedHashMap<String, Integer>();
-		String soldPath = OEMultiT.inputPath.getParent() + "/OE_Java/soldToMap.xlsx";
+		
+		String soldPath = null;
+		if (OEMultiT.salesOrg.equalsIgnoreCase("1290")) {
+			soldPath = OEMultiT.inputPath.getParent() + "/OE_Java/soldToMap.xlsx";
+		} else if (OEMultiT.salesOrg.equalsIgnoreCase("1910")) {
+			soldPath = OEMultiT.inputPath.getParent() + "/OE_Java_1910/soldToMap.xlsx";
+		}
+		
 		FileInputStream readStr = null; //POI does not support buffered stream
 		XSSFWorkbook wb = null;
 		XSSFSheet tableNumberSheet = null;
@@ -48,7 +55,14 @@ public class OEFunctions {
 	}
 	public static void priceTablesTableBuilder() {
 		priceTables = new LinkedHashMap<Integer, Map<String,Double>>();
-		String soldPath = OEMultiT.inputPath.getParent() + "/OE_Java/ListaPrecoMaster.xlsx";
+		
+		String soldPath = null;
+		if (OEMultiT.salesOrg.equalsIgnoreCase("1290")) {
+			soldPath = OEMultiT.inputPath.getParent() + "/OE_Java/ListaPrecoMaster.xlsx";
+		}else if (OEMultiT.salesOrg.equalsIgnoreCase("1910")) {
+			soldPath = OEMultiT.inputPath.getParent() + "/OE_Java_1910/ListaPrecoMaster.xlsx";
+		}
+		
 		FileInputStream readStr = null; //POI does not support buffered stream
 		XSSFWorkbook wb = null;
 		XSSFSheet priceListSheet = null;

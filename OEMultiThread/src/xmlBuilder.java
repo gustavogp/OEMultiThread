@@ -110,16 +110,19 @@ public static void pnArrayBuilder(String s, String soldTo) {
 		} 
 	eanlen = hTempSet.size();
 	
-	buildEanMap();
-	
-	if (!(lSoldTo.equalsIgnoreCase("664689") || lSoldTo.equalsIgnoreCase("662803"))) {	//Walmart EAN are wrong: Officer sometimes gets a "concatenate" error, so it's included here
-		if (eanlen!=0) {
-			hSet.clear(); //clear this set to start from empty with the EAN
-			eanToPn();
+	//only build eanmap for sales org 1290
+	if (OEMultiT.salesOrg.equalsIgnoreCase("1290")) {
+		buildEanMap();
+
+
+		if (!(lSoldTo.equalsIgnoreCase("664689") || lSoldTo.equalsIgnoreCase("662803"))) {	//Walmart EAN are wrong: Officer sometimes gets a "concatenate" error, so it's included here
+			if (eanlen!=0) {
+				hSet.clear(); //clear this set to start from empty with the EAN
+				eanToPn();
+			}
 		}
+		getEAN();
 	}
-	getEAN();
-	
 
 }
 
@@ -236,7 +239,7 @@ public static void qtyArrayBuilder(String s, String order, String totalAmount, S
 		for (i = firstIndex; i<lastIndex; i++) {
 			try {
 				try {
-					if(soldTo.equalsIgnoreCase("avnetLA") || soldTo.equalsIgnoreCase("664711")) { //ACOM 664711  using English format, NOT ANYMORE (04/20/2012), AGAIN 0n 05/04, NOT ANYMORE (05/16), AGAIN (06/06), NOT ANYMORE (06/12), AGAIN (06/19)
+					if(OEMultiT.salesOrg.equalsIgnoreCase("1910") || soldTo.equalsIgnoreCase("664711")) { //ACOM 664711  using English format, NOT ANYMORE (04/20/2012), AGAIN 0n 05/04, NOT ANYMORE (05/16), AGAIN (06/06), NOT ANYMORE (06/12), AGAIN (06/19)
 						//excluding elements that are not pure integers
 						if(!(elements[i].contains("%")) && !(elements[i].contains("/")) && !(elements[i].contains("G")) && !(elements[i].contains("\""))){
 							temp = nFEng.parse(elements[i]);
@@ -406,7 +409,10 @@ public static void closeXML() throws SAXException {
 	handler.endElement("", "", "Batch");
 	handler.endDocument();
 	xlsxBuilder.main();
-	csvBuilder.main();
+	//build csv for sales org 1290 only
+	if (OEMultiT.salesOrg.equalsIgnoreCase("1290")) {
+		csvBuilder.main();
+	}
 	OEMultiT.doneMessage();
 }
 
