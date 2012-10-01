@@ -15,6 +15,9 @@ public class OEMultiT extends JPanel implements ActionListener {
     JButton chooseFolderButton, runButton;
     static JTextArea log;
     JFileChooser fc;
+    static String salesOrg;
+    final String [] salesOrgList = {"1290", "1910"};
+    JComboBox salesOrgCB;
 	
     //constructor
 	public OEMultiT () {
@@ -38,8 +41,14 @@ public class OEMultiT extends JPanel implements ActionListener {
         runButton = new JButton ("Run");
         runButton.addActionListener(this);
         
+        //Create the combo box
+        salesOrgCB = new JComboBox(salesOrgList);
+        salesOrgCB.setSelectedIndex(0);
+        salesOrgCB.addActionListener(this);
+        
         //For layout purposes, put the buttons in a separate panel
         JPanel buttonPanel = new JPanel(); //use FlowLayout
+        buttonPanel.add(salesOrgCB);
         buttonPanel.add(chooseFolderButton);
         buttonPanel.add(runButton);
 
@@ -91,7 +100,10 @@ public class OEMultiT extends JPanel implements ActionListener {
             	log.append("Select Source Folder first." + newline);
             }
         	log.setCaretPosition(log.getDocument().getLength());
-        	}
+        } else if (ev.getSource() == salesOrgCB) {
+        	salesOrg = (String) salesOrgCB.getSelectedItem();
+        }
+        
 	}
 
 	private static void createAndShowGUI () {
