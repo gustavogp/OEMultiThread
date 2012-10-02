@@ -390,9 +390,14 @@ public static void elementBuilder(String soldTo, String shipTo, String pO) throw
 			handler.startElement("", "", "PartNumber", atts);
 			handler.characters(pnString.toCharArray(), 0, pnString.length());
 			handler.endElement("", "", "PartNumber");
-			handler.startElement("", "", "EAN", atts);
-			handler.characters(((String) hTempSet.toArray()[k]).toCharArray(), 0, ((String) hTempSet.toArray()[k]).length());
-			handler.endElement("", "", "EAN");
+			
+			//only add ean if sales org == 1290
+			if (OEMultiT.salesOrg.equalsIgnoreCase("1290")) {
+				handler.startElement("", "", "EAN", atts);
+				handler.characters(((String) hTempSet.toArray()[k]).toCharArray(), 0, ((String) hTempSet.toArray()[k]).length());
+				handler.endElement("", "", "EAN");
+			}
+			
 			handler.startElement("", "", "Qty", atts);
 			handler.characters(qty[k].toCharArray(), 0, qty[k].length());
 			handler.endElement("", "", "Qty");

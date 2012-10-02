@@ -21,7 +21,15 @@ public class ChangeFileName {
 	public static void buildSoldAndShipMaps () {
 		soldToMap = new LinkedHashMap<String, String>();
 		shipToMap = new LinkedHashMap<String, String>();
-		String soldPath = OEMultiT.inputPath.getParent() + "/OE_Java/soldToMap.xlsx";
+		
+		String soldPath = null;
+		if (OEMultiT.salesOrg.equalsIgnoreCase("1290")) {
+			soldPath = OEMultiT.inputPath.getParent() + "/OE_Java/soldToMap.xlsx";
+		} else if (OEMultiT.salesOrg.equalsIgnoreCase("1910")) {
+			soldPath = OEMultiT.inputPath.getParent() + "/OE_Java_1910/soldToMap.xlsx";
+		}
+		
+		
 		FileInputStream readStr = null; //POI does not support buffered stream
 		XSSFWorkbook wb = null;
 		XSSFSheet soldSheet = null;
