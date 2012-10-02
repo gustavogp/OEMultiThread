@@ -15,7 +15,7 @@ public class OEMultiT extends JPanel implements ActionListener {
     JButton chooseFolderButton, runButton;
     static JTextArea log;
     JFileChooser fc;
-    static String salesOrg;
+    static String salesOrg = "1290";
     final String [] salesOrgList = {"1290", "1910"};
     JComboBox salesOrgCB;
 	
