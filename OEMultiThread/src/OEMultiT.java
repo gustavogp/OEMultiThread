@@ -12,7 +12,7 @@ public class OEMultiT extends JPanel implements ActionListener {
     //fields
 	static private final String newline = "\n";
 	static File inputPath;
-    JButton chooseFolderButton, runButton;
+    JButton chooseFolderButton, runButton, archiveButton;
     static JTextArea log;
     JFileChooser fc;
     static String salesOrg = "1290";
@@ -24,7 +24,7 @@ public class OEMultiT extends JPanel implements ActionListener {
 		super (new BorderLayout());
 		
 		//Create the log first, because the action listeners
-        log = new JTextArea(15,50);
+        log = new JTextArea(15,60);
         log.setMargin(new Insets(5,5,5,5));
         log.setEditable(false);
         JScrollPane logScrollPane = new JScrollPane(log);
@@ -46,11 +46,16 @@ public class OEMultiT extends JPanel implements ActionListener {
         salesOrgCB.setSelectedIndex(0);
         salesOrgCB.addActionListener(this);
         
+        //create the arcive button
+        archiveButton = new JButton("Archive Now");
+        archiveButton.addActionListener(this);
+        
         //For layout purposes, put the buttons in a separate panel
         JPanel buttonPanel = new JPanel(); //use FlowLayout
         buttonPanel.add(salesOrgCB);
         buttonPanel.add(chooseFolderButton);
         buttonPanel.add(runButton);
+        buttonPanel.add(archiveButton);
 
         //Add the buttons and the log to this panel.
         add(buttonPanel, BorderLayout.PAGE_START);
@@ -102,6 +107,19 @@ public class OEMultiT extends JPanel implements ActionListener {
         	log.setCaretPosition(log.getDocument().getLength());
         } else if (ev.getSource() == salesOrgCB) {
         	salesOrg = (String) salesOrgCB.getSelectedItem();
+        } else if (ev.getSource() == archiveButton) {
+        	try {
+				Thread t2 = new Thread( new Runnable () {
+						public void run() {
+							ArchivePO.main();
+						}
+				});
+				t2.start();
+			} catch (Exception e) {
+				log.append("Exception! Unable to archive." + newline);
+			} finally {
+				//do nothing
+			}
         }
         
 	}
@@ -132,6 +150,9 @@ public class OEMultiT extends JPanel implements ActionListener {
 	}
 	public static void invalidFineNameMessage () {
 		log.append("Invalid File Name, check all \".\""+ newline);
+	}
+	public static void archivedMessage () {
+		log.append("File archived." + newline);
 	}
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {

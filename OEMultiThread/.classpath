@@ -17,8 +17,6 @@
 	<classpathentry kind="lib" path="/Users/gustavopinheiro/Desktop/eclipse/xerces-2_11_0"/>
 	<classpathentry kind="lib" path="/Users/gustavopinheiro/Desktop/eclipse/plugins/pdfbox-app-1.6.0.jar"/>
 	<classpathentry kind="lib" path="/Users/gustavopinheiro/Desktop/eclipse/plugins/jlfgr-1_0.jar"/>
-	<classpathentry kind="lib" path="/Users/gustavopinheiro/Desktop/eclipse/commons-email-1.2/commons-email-1.2-javadoc.jar"/>
-	<classpathentry kind="lib" path="/Users/gustavopinheiro/Desktop/eclipse/commons-email-1.2/commons-email-1.2-sources.jar"/>
-	<classpathentry kind="lib" path="/Users/gustavopinheiro/Desktop/eclipse/commons-email-1.2/commons-email-1.2.jar"/>
+	<classpathentry kind="lib" path="/Users/gustavopinheiro/Desktop/eclipse/javamail-1.4.5/mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
