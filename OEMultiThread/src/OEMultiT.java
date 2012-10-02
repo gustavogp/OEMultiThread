@@ -11,8 +11,8 @@ import javax.swing.*;
 public class OEMultiT extends JPanel implements ActionListener {
     //fields
 	static private final String newline = "\n";
-	static File inputPath;
-    JButton chooseFolderButton, runButton, archiveButton;
+	static File inputPath, outputToArchive;
+    JButton chooseFolderButton, runButton, chooseArchiveButton, archiveButton;
     static JTextArea log;
     JFileChooser fc;
     static String salesOrg = "1290";
@@ -31,7 +31,6 @@ public class OEMultiT extends JPanel implements ActionListener {
         
         //Create a file chooser
         fc = new JFileChooser();
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         
         //Create the choose folder button
         chooseFolderButton = new JButton ("Select Source Folder...");
@@ -46,15 +45,20 @@ public class OEMultiT extends JPanel implements ActionListener {
         salesOrgCB.setSelectedIndex(0);
         salesOrgCB.addActionListener(this);
         
-        //create the arcive button
+        //create the archive button
         archiveButton = new JButton("Archive Now");
         archiveButton.addActionListener(this);
+        
+        //create choose output to archive button
+        chooseArchiveButton = new JButton("Choose File to Archive");
+        chooseArchiveButton.addActionListener(this);
         
         //For layout purposes, put the buttons in a separate panel
         JPanel buttonPanel = new JPanel(); //use FlowLayout
         buttonPanel.add(salesOrgCB);
         buttonPanel.add(chooseFolderButton);
         buttonPanel.add(runButton);
+        buttonPanel.add(chooseArchiveButton);
         buttonPanel.add(archiveButton);
 
         //Add the buttons and the log to this panel.
@@ -65,6 +69,7 @@ public class OEMultiT extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent ev) {
 		//Handle choose folder button action.
         if (ev.getSource() == chooseFolderButton) {
+        	fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             int returnVal = fc.showOpenDialog(OEMultiT.this);
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -105,13 +110,29 @@ public class OEMultiT extends JPanel implements ActionListener {
             	log.append("Select Source Folder first." + newline);
             }
         	log.setCaretPosition(log.getDocument().getLength());
+        	
         } else if (ev.getSource() == salesOrgCB) {
         	salesOrg = (String) salesOrgCB.getSelectedItem();
+        	
+        } else if (ev.getSource() == chooseArchiveButton) {
+        	fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        	int returnVal = fc.showOpenDialog(OEMultiT.this);
+
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+            	outputToArchive= fc.getSelectedFile();
+            	if (!outputToArchive.getParentFile().getName().equalsIgnoreCase("output_excel")) {
+                	log.append("Please select a file in folder </Users/username/Desktop/output_excel/>" + newline);
+                	outputToArchive = null;
+                } else { 
+                	log.append("Selecting Output File to Archive: " + outputToArchive.getName() + newline);
+                }
+            }
+            
         } else if (ev.getSource() == archiveButton) {
         	try {
 				Thread t2 = new Thread( new Runnable () {
 						public void run() {
-							ArchivePO.main();
+							ArchivePO.sendMail();
 						}
 				});
 				t2.start();
@@ -151,8 +172,8 @@ public class OEMultiT extends JPanel implements ActionListener {
 	public static void invalidFineNameMessage () {
 		log.append("Invalid File Name, check all \".\""+ newline);
 	}
-	public static void archivedMessage () {
-		log.append("File archived." + newline);
+	public static void archivedMessage (String msg) {
+		log.append(msg + newline);
 	}
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {

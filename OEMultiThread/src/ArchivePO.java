@@ -17,13 +17,12 @@ import com.sun.mail.smtp.SMTPTransport;
 
 public class ArchivePO {
 	
+	public void selectAttachment(){
+		
+	}
 	
-	public static void main() {
+	public static void sendMail() {
 		File attch;
-		
-	//	EmailAttachment attachment;
-	//	MultiPartEmail email;
-		
 		Properties prop;
 		String mailhost = "mail.apple.com";
 		String mailer = "smtpsend";
@@ -43,7 +42,8 @@ public class ArchivePO {
 		Message email = new MimeMessage(session);
 		try {
 			email.setFrom(new InternetAddress("gpinheiro@apple.com"));
-			email.setRecipient(RecipientType.TO, new InternetAddress("gpinheiro@apple.com"));
+			email.setRecipient(RecipientType.TO, new InternetAddress("ARCHIVE@kofax.corp.apple.com"));
+			email.setRecipient(RecipientType.CC, new InternetAddress("gpinheiro@apple.com"));
 			email.setSubject("soldTo,PO#,SO#");
 		} catch (AddressException e) {
 			e.printStackTrace();
@@ -81,6 +81,7 @@ public class ArchivePO {
 		} finally {
 				try {
 					System.out.println("Response: " + t.getLastServerResponse());
+					OEMultiT.archivedMessage("Response: " + t.getLastServerResponse());
 					t.close();
 				} catch (MessagingException e) {
 					e.printStackTrace();
