@@ -129,20 +129,24 @@ public class OEMultiT extends JPanel implements ActionListener {
             }
             
         } else if (ev.getSource() == archiveButton) {
-        	try {
-				Thread t2 = new Thread( new Runnable () {
-						public void run() {
-							ArchivePO.selectAttachment(outputToArchive);
-						}
-				});
-				t2.start();
-			} catch (Exception e) {
-				log.append("Exception! Unable to archive." + newline);
-			} finally {
-				//do nothing
-			}
-        }
-        
+        	if (outputToArchive != null) {
+        		log.append("running..." + newline);
+            	try {
+    				Thread t2 = new Thread( new Runnable () {
+    						public void run() {
+    							ArchivePO.selectAttachment(outputToArchive);
+    						}
+    				});
+    				t2.start();
+    			} catch (Exception e) {
+    				log.append("Exception! Unable to archive." + newline);
+    			} finally {
+    				//do nothing
+    			}
+        	} else { 
+            	log.append("Select output batch file to archive first" + newline);
+            }
+        } 
 	}
 
 	private static void createAndShowGUI () {
