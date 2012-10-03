@@ -1,5 +1,9 @@
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
@@ -13,21 +17,81 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import com.sun.mail.smtp.SMTPTransport;
 
 public class ArchivePO {
+	public static int toArchiveCount = 0;
+	public static int archivedCount = 0;
 	
-	public void selectAttachment(){
+	public static void selectAttachment(File outputToArchive){
+		String outputToArchiveL = null;
+		FileInputStream readStr = null; //POI does not support buffered stream
+		XSSFWorkbook wb = null;
+		XSSFSheet BRSheet = null;
+		String subjectLine = null;
+		String PoNumber;
+		String[] PoFiles = new String[100];
+		String toAttach = null;
+		boolean PoIsInfolder;
+		ArrayList<String> noPoFile = new ArrayList<String>();
+		
+		outputToArchiveL = outputToArchive.getAbsolutePath();
+		PoFiles = OEMultiT.inputPath.list();
+		
+		try {
+			readStr = new FileInputStream (outputToArchiveL);
+			wb = new XSSFWorkbook(readStr);
+			BRSheet = wb.getSheetAt(0);
+			
+			for (Row row : BRSheet) {
+				PoIsInfolder = false;
+				PoNumber = null;
+				try {
+						subjectLine = "RES: Order, " + row.getCell(7).getStringCellValue();
+						PoNumber = row.getCell(2).getStringCellValue();
+						toArchiveCount++;
+						for (String fileName : PoFiles) {
+							if (fileName.contains(PoNumber)) {
+								toAttach = fileName;
+								PoIsInfolder = true;
+							}
+						}
+					
+				} catch (NullPointerException e) {
+					//do nothing
+				}
+				if (PoIsInfolder) {
+					sendMail(subjectLine, toAttach);
+				} else {
+					if (!(PoNumber == null)) {
+						noPoFile.add(PoNumber);
+					}
+				}	
+			}
+			OEMultiT.archivedMessage("Total to Archive: " + toArchiveCount + ", Total Archived: " + archivedCount);
+			if (!noPoFile.isEmpty()) {
+				OEMultiT.archivedMessage("The following PO's were not in the moinho folder and were no archived: " + noPoFile);
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
-	public static void sendMail() {
+	public static void sendMail(String subjectLine, String toAttach) {
 		File attch;
 		Properties prop;
 		String mailhost = "mail.apple.com";
 		String mailer = "smtpsend";
 		
-		attch = new File (OEMultiT.inputPath.getAbsolutePath() + "/" + "ing.bar.53938.5958377.pdf");
+		attch = new File (OEMultiT.inputPath.getAbsolutePath() + "/" + toAttach);
 		
 		//set properties
 		prop = System.getProperties();
@@ -41,13 +105,15 @@ public class ArchivePO {
 		//create the email message
 		Message email = new MimeMessage(session);
 		try {
-			email.setFrom(new InternetAddress("gpinheiro@apple.com"));
-			email.setRecipient(RecipientType.TO, new InternetAddress("ARCHIVE@kofax.corp.apple.com"));
-			email.setRecipient(RecipientType.CC, new InternetAddress("gpinheiro@apple.com"));
-			email.setSubject("soldTo,PO#,SO#");
+			email.setFrom(new InternetAddress("gpinheiro@apple.com", "Gustavo Pinheiro"));
+			email.setRecipient(RecipientType.TO, new InternetAddress("ARCHIVE@kofax.corp.apple.com", "KOFAX"));
+			email.setRecipient(RecipientType.CC, new InternetAddress("gpinheiro@apple.com", "Gustavo Pinheiro"));
+			email.setSubject(subjectLine);
 		} catch (AddressException e) {
 			e.printStackTrace();
 		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		MimeBodyPart mbp1 = new MimeBodyPart();
@@ -80,8 +146,11 @@ public class ArchivePO {
 			e.printStackTrace();
 		} finally {
 				try {
-					System.out.println("Response: " + t.getLastServerResponse());
-					OEMultiT.archivedMessage("Response: " + t.getLastServerResponse());
+					System.out.println("Response for " + subjectLine + ": " + t.getLastServerResponse());
+					OEMultiT.archivedMessage("Response: " + subjectLine + ": " + t.getLastServerResponse());
+					if (t.getLastServerResponse().contains("Ok")) {
+						archivedCount++ ;
+					}
 					t.close();
 				} catch (MessagingException e) {
 					e.printStackTrace();

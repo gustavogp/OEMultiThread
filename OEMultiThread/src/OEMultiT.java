@@ -132,7 +132,7 @@ public class OEMultiT extends JPanel implements ActionListener {
         	try {
 				Thread t2 = new Thread( new Runnable () {
 						public void run() {
-							ArchivePO.sendMail();
+							ArchivePO.selectAttachment(outputToArchive);
 						}
 				});
 				t2.start();
