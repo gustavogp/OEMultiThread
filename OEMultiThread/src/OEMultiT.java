@@ -165,19 +165,24 @@ public class OEMultiT extends JPanel implements ActionListener {
 	
 	public static void doneMessage () {
 		log.append("Done! Check if all files were processed correctly." + newline);
+		log.setCaretPosition(log.getDocument().getLength());
 	}
 	
 	public static void noValidSkuMessage (String order) {
 		log.append("No Valid SKU found on PO " + order + newline);
+		log.setCaretPosition(log.getDocument().getLength());
 	}
 	public static void invalidSoldShipMessage (String soldTo, String shipTo) {
 		log.append("Invalid Sold-To or Ship-To " + soldTo + ", " + shipTo + newline);
+		log.setCaretPosition(log.getDocument().getLength());
 	}
 	public static void invalidFineNameMessage () {
 		log.append("Invalid File Name, check all \".\""+ newline);
+		log.setCaretPosition(log.getDocument().getLength());
 	}
 	public static void archivedMessage (String msg) {
 		log.append(msg + newline);
+		log.setCaretPosition(log.getDocument().getLength());
 	}
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
