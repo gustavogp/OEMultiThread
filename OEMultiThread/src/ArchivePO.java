@@ -24,10 +24,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.sun.mail.smtp.SMTPTransport;
 
 public class ArchivePO {
-	public static int toArchiveCount = 0;
-	public static int archivedCount = 0;
+	public static int toArchiveCount;
+	public static int archivedCount;
 	
 	public static void selectAttachment(File outputToArchive){
+		toArchiveCount = 0;
+		archivedCount = 0;
 		String outputToArchiveL = null;
 		FileInputStream readStr = null; //POI does not support buffered stream
 		XSSFWorkbook wb = null;
