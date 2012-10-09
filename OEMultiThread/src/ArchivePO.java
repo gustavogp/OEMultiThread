@@ -149,7 +149,10 @@ public class ArchivePO {
 			t.sendMessage(email, email.getAllRecipients());
 		} catch (MessagingException e) {
 			e.printStackTrace();
-		} finally {
+			OEMultiT.archivedMessage("Error archiving: " + e.getMessage());
+		} 
+		finally {
+		
 				try {
 					System.out.println("Response for " + subjectLine + ": " + t.getLastServerResponse());
 					OEMultiT.archivedMessage("Response: " + subjectLine + ": " + t.getLastServerResponse());
@@ -159,6 +162,9 @@ public class ArchivePO {
 					t.close();
 				} catch (MessagingException e) {
 					e.printStackTrace();
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+					OEMultiT.archivedMessage("Error archiving: no response from server");
 				}
 	    }
 	}
