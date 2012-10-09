@@ -117,6 +117,9 @@ public class ArchivePO {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
+		} catch (NoClassDefFoundError e) {
+			e.printStackTrace();
+			OEMultiT.archivedMessage( e.getMessage());
 		}
 		MimeBodyPart mbp1 = new MimeBodyPart();
 		try {
