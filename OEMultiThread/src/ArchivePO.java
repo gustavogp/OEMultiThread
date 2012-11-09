@@ -44,6 +44,10 @@ public class ArchivePO {
 		outputToArchiveL = outputToArchive.getAbsolutePath();
 		PoFiles = OEMultiT.inputPath.list();
 		
+		//setup the progressbar
+	//	OEMultiT.progressBar.setMaximum(toArchiveCount);
+	//	OEMultiT.progressBar.setValue(0);
+		
 		try {
 			readStr = new FileInputStream (outputToArchiveL);
 			wb = new XSSFWorkbook(readStr);
@@ -66,6 +70,7 @@ public class ArchivePO {
 				} catch (NullPointerException e) {
 					//do nothing
 				}
+				
 				if (PoIsInfolder) {
 					sendMail(subjectLine, toAttach);
 				} else {
@@ -159,6 +164,7 @@ public class ArchivePO {
 					if (t.getLastServerResponse().contains("Ok")) {
 						archivedCount++ ;
 					}
+				//	OEMultiT.progressBar.setValue(archivedCount);
 					t.close();
 				} catch (MessagingException e) {
 					e.printStackTrace();

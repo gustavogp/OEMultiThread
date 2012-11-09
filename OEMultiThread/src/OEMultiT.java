@@ -18,6 +18,7 @@ public class OEMultiT extends JPanel implements ActionListener {
     static String salesOrg = "1290";
     final String [] salesOrgList = {"1290", "1910"};
     JComboBox salesOrgCB;
+    static JProgressBar progressBar;
 	
     //constructor
 	public OEMultiT () {
@@ -53,6 +54,11 @@ public class OEMultiT extends JPanel implements ActionListener {
         chooseArchiveButton = new JButton("Choose File to Archive");
         chooseArchiveButton.addActionListener(this);
         
+        //create the progressbar
+        progressBar = new JProgressBar();
+        progressBar.setStringPainted(true);
+        progressBar.setValue(0);
+        
         //For layout purposes, put the buttons in a separate panel
         JPanel buttonPanel = new JPanel(); //use FlowLayout
         buttonPanel.add(salesOrgCB);
@@ -61,9 +67,14 @@ public class OEMultiT extends JPanel implements ActionListener {
         buttonPanel.add(chooseArchiveButton);
         buttonPanel.add(archiveButton);
 
+      //For layout purposes, put the progressbar in a separate panel
+        JPanel progressPanel = new JPanel(); //use FlowLayout
+        progressPanel.add(progressBar);
+        
         //Add the buttons and the log to this panel.
         add(buttonPanel, BorderLayout.PAGE_START);
         add(logScrollPane, BorderLayout.CENTER);
+        add(progressPanel, BorderLayout.PAGE_END);
 	}
 	@Override
 	public void actionPerformed(ActionEvent ev) {
